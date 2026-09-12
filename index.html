@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M.Profit Studio</title>
+    <meta name="description" content="A considered financial workspace prototype for decision-making, not just reporting." />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="sidebar" aria-label="Primary navigation">
+        <a class="wordmark" href="#overview">M.<i>Profit</i><span>STUDIO</span></a>
+        <div class="nav-group">
+          <button class="nav-item active" data-view="overview">Overview</button>
+          <button class="nav-item" data-view="positions">Positions</button>
+          <button class="nav-item" data-view="scenarios">Scenarios</button>
+          <button class="nav-item" data-view="notes">Investment notes</button>
+        </div>
+        <div class="sidebar-bottom">
+          <span class="account-mark">DM</span>
+          <div><strong>Divit Mehta</strong><small>Personal workspace</small></div>
+        </div>
+      </nav>
+
+      <section class="workspace" id="overview">
+        <header class="topbar">
+          <p class="eyebrow" id="today"></p>
+          <button class="mode-button" id="theme-toggle" type="button">Use dark</button>
+        </header>
+
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Portfolio valuation</p>
+            <h1>Build conviction,<br /><i>not noise.</i></h1>
+          </div>
+          <div class="valuation">
+            <strong id="portfolio-value">₹12,48,640</strong>
+            <span id="portfolio-change">+₹18,240 today&nbsp;&nbsp; +1.48%</span>
+          </div>
+        </section>
+
+        <section class="main-grid">
+          <article class="card performance-card">
+            <div class="card-top"><div><p class="eyebrow">Portfolio trajectory</p><h2>Measured growth</h2></div><span class="time-range">1Y</span></div>
+            <div class="chart-wrap" aria-label="Portfolio performance line chart">
+              <svg viewBox="0 0 720 250" role="img" aria-label="Portfolio returns rising from 8.9 to 19.6 percent">
+                <defs><linearGradient id="fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#d6673b" stop-opacity=".2"/><stop offset="100%" stop-color="#d6673b" stop-opacity="0"/></linearGradient></defs>
+                <g class="grid-lines"><path d="M0 30H720M0 90H720M0 150H720M0 210H720"/></g>
+                <path class="area" d="M0 207 C45 190 61 205 98 181 S150 176 184 143 S243 154 279 113 S333 130 370 105 S430 120 457 84 S506 98 546 61 S608 74 642 40 S690 50 720 23 V250H0Z"/>
+                <path class="line" d="M0 207 C45 190 61 205 98 181 S150 176 184 143 S243 154 279 113 S333 130 370 105 S430 120 457 84 S506 98 546 61 S608 74 642 40 S690 50 720 23"/>
+                <circle class="point" cx="720" cy="23" r="6"/>
+              </svg>
+            </div>
+            <div class="chart-caption"><span>Sep ’25</span><strong>19.6% annualised</strong><span>Aug ’26</span></div>
+          </article>
+
+          <article class="card allocation-card">
+            <p class="eyebrow">Asset allocation</p>
+            <h2>Deliberately uneven</h2>
+            <div class="allocation-ring" aria-label="64 percent equity, 22 percent debt, 14 percent cash"><span>64<small>% equity</small></span></div>
+            <ul class="legend"><li><i class="equity"></i>Equity <strong>64%</strong></li><li><i class="debt"></i>Debt <strong>22%</strong></li><li><i class="cash"></i>Cash <strong>14%</strong></li></ul>
+          </article>
+
+          <article class="card positions-card" id="positions">
+            <div class="card-top"><div><p class="eyebrow">Largest positions</p><h2>What carries the thesis</h2></div><button class="text-button" data-view="positions">View all</button></div>
+            <div class="position-list" id="position-list"></div>
+          </article>
+
+          <article class="card scenario-card" id="scenarios">
+            <p class="eyebrow">Stress test</p><h2>What if the market moves?</h2>
+            <div class="scenario-result"><strong id="scenario-change">−₹1,12,378</strong><span id="scenario-copy">At a 9% market drawdown</span></div>
+            <label for="drawdown">Market move <output id="drawdown-output">−9%</output></label>
+            <input id="drawdown" type="range" min="-25" max="15" value="-9" step="1" />
+            <p class="scenario-note">Estimate based on current weights. It is an assumption to examine, not a prediction.</p>
+          </article>
+        </section>
+
+        <section class="decision-note" id="notes">
+          <p class="eyebrow">This week’s decision</p>
+          <label class="decision-label" for="decision-text">Write the decision before the market writes it for you.</label>
+          <textarea id="decision-text" rows="3">Keep the cash buffer intact. Add only when the business thesis changes, not because the price moved.</textarea>
+          <button class="text-button" id="save-note" type="button">Save decision</button><span class="saved-message" id="saved-message" aria-live="polite"></span>
+        </section>
+      </section>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

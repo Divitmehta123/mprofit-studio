@@ -1,0 +1,7 @@
+import test from 'node:test'; import assert from 'node:assert/strict'; import { once } from 'node:events';
+import { assertPortfolio,calculateImpact,formatInr,orderedPositions,portfolio } from '../src/portfolio.js'; import { createServer } from '../src/server.js';
+test('allocation invariant and drawdown exposure are deterministic',()=>{assert.equal(assertPortfolio(portfolio),portfolio);assert.equal(calculateImpact(1_248_640,.64,-9),-71_922);assert.equal(calculateImpact(1_248_640,.64,15),119_869);});
+test('invalid scenario inputs fail closed',()=>assert.throws(()=>calculateImpact(1,.5,Number.NaN),/finite/));
+test('positions rank by capital at risk without mutation',()=>{const values=[{value:1},{value:3},{value:2}];assert.deepEqual(orderedPositions(values).map(({value})=>value),[3,2,1]);assert.deepEqual(values.map(({value})=>value),[1,3,2]);});
+test('Indian currency formatting is stable',()=>{assert.match(formatInr(1248640),/12,48,640/);assert.equal(formatInr(236000,true),'₹2.36L');});
+test('local server serves the app and handles missing files',async(t)=>{const server=createServer().listen(0,'127.0.0.1');t.after(()=>server.close());await once(server,'listening');const{port}=server.address();const home=await fetch(`http://127.0.0.1:${port}/`);assert.equal(home.status,200);assert.match(await home.text(),/M\.Profit Studio/);assert.equal((await fetch(`http://127.0.0.1:${port}/missing.txt`)).status,404);});
